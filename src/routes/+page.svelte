@@ -1,4 +1,3 @@
-
 <script lang="ts">
     import type {BillboardMovie} from "$lib/types/movies"
     export let data:{billboardMovies: BillboardMovie[]};
