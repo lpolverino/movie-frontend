@@ -1,14 +1,26 @@
-<script>
-	import { getContext } from "svelte";
+<script lang="ts">
+	import type { Cinema } from "$lib/types/cinemas";
+	import { invalidateAll } from '$app/navigation';
 
-    const {cinemas} = $props();
+    const {cinemas, selectedCinema} = $props();
 
     let cinemaSelectorOpen = $state(false);
 
-    const selectedCinema = getContext('cinemaSelected');
+    const cinemaSelectorHandler = async (cinema:Cinema) => {
+		const res = await fetch('/api/set-cinema', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ cinema })
+		});
 
-    const cinemaSelectorHandler = (cinema) => {
-        selectedCinema.changeCinemaSelected(cinema);
+		if (!res.ok) {
+			console.error('Error cambiando cine');
+			return;
+		}
+
+		await invalidateAll();
     }
 
 </script>
@@ -26,7 +38,7 @@
 {/if}
 
 <div>
-	<h1>Cinemas</h1>
+	<h1><a href="/">Cinemas</a></h1>
 	<nav>
 		<a href="/peliculas">peliculas</a>
 		<a href="/candy">Candy</a>
@@ -34,6 +46,8 @@
 		<a href="/Regala-Cine">Regala Cine</a>
 		<a href="/Store">Store</a>
 	</nav>
-	<button onclick={() => cinemaSelectorOpen = !cinemaSelectorOpen}>{selectedCinema.getCinemaSelectedValue()?.name??"Elegir Cine"}</button>
+	<button onclick={() => cinemaSelectorOpen = !cinemaSelectorOpen}>
+		{selectedCinema??"Elegir Cine"}
+	</button>
 	<a href="/Elegir-Pelicula">Elegi Pelicula</a>
 </div>	

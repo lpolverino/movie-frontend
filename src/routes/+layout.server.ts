@@ -2,7 +2,7 @@ import { PUBLIC_API_URL } from '$env/static/public';
 import { CinemasSchema } from '$lib/types/cinemas.js';
 import { error } from '@sveltejs/kit';
 
-export const load = async ({fetch}) => {
+export const load = async ({fetch, locals}) => {
 
     let res: Response;
     try{
@@ -17,8 +17,6 @@ export const load = async ({fetch}) => {
     }
 
     const json = await res.json();
-
-    console.log(json);
     
     const parsed = CinemasSchema.safeParse(json);
 
@@ -28,6 +26,7 @@ export const load = async ({fetch}) => {
     }
 
     return {
-        cinema: parsed.data
+        cinemas: parsed.data,
+        cinema: locals.cinema
     }
 }
