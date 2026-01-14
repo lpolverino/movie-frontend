@@ -47,7 +47,7 @@
 		<a href="/Store">Store</a>
 	</nav>
 	<button onclick={() => cinemaSelectorOpen = !cinemaSelectorOpen}>
-		{selectedCinema??"Elegir Cine"}
+		{selectedCinema}
 	</button>
 	<a href="/Elegir-Pelicula">Elegi Pelicula</a>
 </div>	

@@ -9,6 +9,6 @@
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
-<Header cinemas={data.cinemas} selectedCinema={data.cinema.name}></Header>
+<Header cinemas={data.cinemas} selectedCinema={data.cinema?.name||"Elegir Cine"}></Header>
 
 {@render children()}
